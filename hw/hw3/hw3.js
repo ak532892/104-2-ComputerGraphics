@@ -43,7 +43,7 @@ function texturedFace() {
 	// CORS:
 	// http://stackoverflow.com/questions/24087757/three-js-and-loading-a-cross-domain-image
 	THREE.ImageUtils.crossOrigin = '';
-	texture = THREE.ImageUtils.loadTexture('http://i.imgur.com/BRQLEdn.jpg');
+	texture = THREE.ImageUtils.loadTexture('images/Asphalt.jpg');
 	texture.repeat.set(1, 1);
 	texture.wrapS = THREE.RepeatWrapping;
 	texture.wrapT = THREE.RepeatWrapping;
@@ -212,7 +212,7 @@ function makeBox(x, y, z){
 	var material = new THREE.MeshBasicMaterial({
 side: THREE.DoubleSide,
 transparent: true, // key to cutout texture
-map: THREE.ImageUtils.loadTexture('http://i.imgur.com/ArDUeSy.png')
+map: THREE.ImageUtils.loadTexture('images/carBody.png')
 	});
 
 	var boxMesh = new THREE.Mesh(geometry, material);
@@ -224,7 +224,7 @@ function makeCylinder(rtop, rbottom, height){
 	var geometry = new THREE.CylinderGeometry(rtop, rbottom, height);
 	var material = new THREE.MeshBasicMaterial({
 side: THREE.DoubleSide,
-map: THREE.ImageUtils.loadTexture('http://i.imgur.com/9bDYoGq.png')
+map: THREE.ImageUtils.loadTexture('images/column.png')
 	});
 	var cylinderMesh = new THREE.Mesh(geometry, material);
 	
@@ -235,7 +235,7 @@ function makeTire(rtop, rbottom, height){
 	var geometry = new THREE.CylinderGeometry(rtop, rbottom, height);
 	var material = new THREE.MeshBasicMaterial({
 side: THREE.DoubleSide,
-map: THREE.ImageUtils.loadTexture('http://i.imgur.com/zEvHWXx.png')
+map: THREE.ImageUtils.loadTexture('images/tire.png')
 	});
 	var cylinderMesh = new THREE.Mesh(geometry, material);
 	

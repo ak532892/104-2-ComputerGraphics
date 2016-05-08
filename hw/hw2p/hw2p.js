@@ -234,12 +234,12 @@ function makeBoxHead(x, y, z, color) {
 	var materials = [], material;
 	// must give 6 materials for box geometry
 	THREE.ImageUtils.crossOrigin = '';
-	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('http://i.imgur.com/RCbQBqa.png')}));
-	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('http://i.imgur.com/XMWMPFV.png')}));
-	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('http://i.imgur.com/NbLI98p.png')}));
+	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('images/head_px.png')}));
+	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('images/head_nx.png')}));
+	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('images/head_py.png')}));
 	materials.push(new THREE.MeshLambertMaterial({visible:false}));
-	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('http://i.imgur.com/3YnIGh7.png')}));
-	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('http://i.imgur.com/xHWks9u.png')}));
+	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('images/head_pz.png')}));
+	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('images/head_nz.png')}));
 	
 	var material = new THREE.MeshFaceMaterial(materials);
 	var geometry = new THREE.BoxGeometry(x, y, z);
@@ -252,12 +252,12 @@ function makeBoxTorso(x, y, z, color) {
 	var materials = [], material;
 	// must give 6 materials for box geometry
 	THREE.ImageUtils.crossOrigin = '';
-	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('http://i.imgur.com/376MIgf.png')}));
-	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('http://i.imgur.com/VwSW4cZ.png')}));
-	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('http://i.imgur.com/ZtqJJS8.png')}));
+	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('images/torso_px.png')}));
+	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('images/torso_nx.png')}));
+	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('images/torso_py.png')}));
 	materials.push(new THREE.MeshLambertMaterial({visible:false}));
-	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('http://i.imgur.com/AN25drk.png')}));
-	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('http://i.imgur.com/eEle2S2.png')}));
+	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('images/torso_pz.png')}));
+	materials.push(new THREE.MeshLambertMaterial({side:THREE.DoubleSide, map:THREE.ImageUtils.loadTexture('images/torso_nz.png')}));
 	
 	var material = new THREE.MeshFaceMaterial(materials);
 	var geometry = new THREE.BoxGeometry(x, y, z);

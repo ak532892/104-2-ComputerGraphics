@@ -1,12 +1,43 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
+
 <head>
-<title>Page Title</title>
+<style>
+	#info {
+		position: absolute;
+		top: 0px;
+		width: 100%;
+		padding: 10px;
+		text-align: center;
+		color: #ffff00
+	}
+
+	#gui {
+		position: absolute;
+		top: 50px;
+		right: 10px;
+		height: 500px;
+		//text-align: center;
+	}
+
+	body {
+		overflow: hidden;
+	}
+</style>
 </head>
-<body>
 
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
-
+<body> 
+	<div id="info">Homework 2p
+		<br/>Press ENTER to Change View
+		<br />
+		<a href="javascript:style('running')">run</a>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r74/three.min.js"></script>
+	<script src="https://dl.dropboxusercontent.com/u/3587259/Code/Threejs/OrbitControls.js">
+	</script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5/dat.gui.min.js"></script>
+	<script src="https://jyunming-chen.github.io/tutsplus/js/KeyboardState.js"></script>
+	<script src="hw2p.js"></script> 
 </body>
+
 </html>
