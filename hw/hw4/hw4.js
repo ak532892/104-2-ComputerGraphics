@@ -37,7 +37,7 @@ function texturedFace() {
 	// CORS:
 	// http://stackoverflow.com/questions/24087757/three-js-and-loading-a-cross-domain-image
 	THREE.ImageUtils.crossOrigin = '';
-	texture = THREE.ImageUtils.loadTexture('http://ak532892.github.io/ComputerGraphics2016/hw/hw4/models/Bottom.png');
+	texture = THREE.ImageUtils.loadTexture('models/Bottom.png');
 	texture.repeat.set(1, 1);
 	texture.wrapS = THREE.RepeatWrapping;
 	texture.wrapT = THREE.RepeatWrapping;
@@ -77,21 +77,12 @@ function init()
 	floorMesh.rotation.x = Math.PI/2;
 	scene.add(floorMesh);
 	
-	/*var pointLight = new THREE.PointLight (0xffffff);
-	pointLight.position.set (0,300,200);
-	scene.add (pointLight);
-
-	var ambientLight = new THREE.AmbientLight (0x111111);
-	scene.add(ambientLight);*/
-
-	
-	
 	////////////////////////////////////////////////////////////////////
 	// load the clara.io Nissan GT-R NISMO
 	THREE.ImageUtils.crossOrigin = '';  // no space between a pair of single quotes
 
 	var loader = new THREE.ObjectLoader();
-	loader.load ('https://ak532892.github.io/ComputerGraphics2016/hw/hw4/models/nissan-gt-r-nismo.json', 
+	loader.load ('models/nissan-gt-r-nismo.json', 
 	function ( obj ) {
 		obj.scale.set (10, 10, 10);
 		scene.add( obj );
@@ -103,6 +94,7 @@ function init()
 		});
 		car = obj;
 	});
+	
 	headMesh = makeBoxSix(30, 30, 15);
 	headMesh.position.y = 15;
 	scene.add(headMesh);
@@ -149,6 +141,7 @@ function animate()
 	var dt = clock.getDelta();
 	
 	if (car !== undefined && turn) { 
+		//plane.position.set (50*Math.cos(angle)+20,5,-50*Math.sin(angle)+20);
 		car.position.set (50*Math.cos(angle),5,-50*Math.sin(angle));
 		headMesh.position.set (50*Math.cos(angle),25,-50*Math.sin(angle));
 		headMesh.rotation.y = car.rotation.y = angle + Math.PI;
@@ -169,7 +162,7 @@ function makeBoxSix(x, y, z) {
 	materials.push(new THREE.MeshLambertMaterial({visible:false}));
 	materials.push(new THREE.MeshLambertMaterial({visible:false}));
 	materials.push(new THREE.MeshLambertMaterial({color:0x00ffff}));
-	materials.push(new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture('http://ak532892.github.io/ComputerGraphics2016/hw/hw4/images/410105130.jpg')}));
+	materials.push(new THREE.MeshLambertMaterial({map:THREE.ImageUtils.loadTexture('images/410105130.jpg')}));
 	
 	var material = new THREE.MeshFaceMaterial(materials);
 	var geometry = new THREE.BoxGeometry(x, y, z);
