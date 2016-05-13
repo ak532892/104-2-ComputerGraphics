@@ -19,10 +19,65 @@
 <body> 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r70/three.min.js"></script>
 	<script src="https://dl.dropboxusercontent.com/u/3587259/Code/Threejs/OrbitControls.js"></script>
-	<div id='info'>
-		Model is from <a href='https://clara.io/view/016cc009-24c6-4d6d-8c60-49b9e899f864#'>URL</a>
-	</div>
-	<script src="hw4.js"></script> 
+	<script src="//cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5/dat.gui.min.js"></script>
+	<script id="myVertexShader" type="x-shader/x-vertex">
+		uniform int shading;
+		uniform int coordinate;
+		varying vec4 myeyepos;
+		varying vec3 mycolor;
+		
+		void main() {
+			gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0);
+			if(coordinate == 0){
+				vec4 objpos = vec4( position, 1.0);
+				if (objpos.x > 0.0) 
+					mycolor = vec3 (0, 0, 0);
+				else
+					mycolor = vec3 (1, 1, 1);
+				myeyepos = objpos;
+			}
+			else if(coordinate == 1){
+				vec4 worldpos = modelMatrix * vec4( position, 1.0);
+				if (worldpos.x > 0.0) 
+					mycolor = vec3 (0, 0, 0);
+				else
+					mycolor = vec3 (1, 1, 1);
+				myeyepos = worldpos;
+			}
+			else{	
+				vec4 eyepos = modelViewMatrix * vec4( position, 1.0);
+				if (eyepos.x > 0.0) 
+					mycolor = vec3 (0, 0, 0);
+				else
+					mycolor = vec3 (1, 1, 1);
+				myeyepos = eyepos;
+			}
+		}
+	</script>
+	<script id="myFragmentShader" type="x-shader/x-fragment">
+		uniform int shading;
+		varying vec4 myeyepos;
+		varying vec3 mycolor;
+		vec3 mycolor2;
+		
+		void perPixelShading() {
+			if (myeyepos.x > 0.0) 
+				mycolor2 = vec3 (0, 0, 0);
+			else
+				mycolor2 = vec3 (1, 1, 1);
+		}
+		
+		void main() {
+			if(shading == 0){
+				gl_FragColor = vec4 (mycolor, 1.0);
+			}
+			else{
+				perPixelShading();
+				gl_FragColor = vec4 (mycolor2, 1.0);
+			}
+		}
+	</script>
+	<script src="hw5.js"></script> 
 </body>
 
 </html>
