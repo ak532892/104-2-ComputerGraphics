@@ -19,21 +19,51 @@ function init() {
 	
 	scene = new THREE.Scene();
 
-	camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
-	camera.position.z = 200;
+	camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
+	camera.position.z = 200;//200
 	camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 	controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-	var gridXZ = new THREE.GridHelper(100, 10);
-	gridXZ.setColors(new THREE.Color(0xff0000), new THREE.Color(0xffffff));
-	scene.add(gridXZ);
+	///
+	THREE.ImageUtils.crossOrigin = '';
+	var ppTexture = THREE.ImageUtils.loadTexture("images/floor_wood.jpg");
+	//change
+	var floorMesh = new THREE.Mesh(new THREE.PlaneGeometry(600, 600), new THREE.MeshBasicMaterial({
+		map:ppTexture,
+		side:THREE.DoubleSide
+	}));
+	floorMesh.rotation.x = Math.PI / 2;
+	scene.add(floorMesh);
+	///
 
-	pointLight = new THREE.PointLight(0xffffff);
-	pointLight.position.set(200, 300, 200);
-	scene.add(pointLight);
-	var ambientLight = new THREE.AmbientLight(0x111111);
-	scene.add(ambientLight);
+	light1 = new THREE.SpotLight(0xffffff, 1.5);
+	light1.position.set(0, 150, 0);
+	light1.angle = Math.PI/2;
+	light1.exponent = 10;
+		
+	scene.add(light1);
+
+	// shadow map settings
+	light1.castShadow = true;
+	light1.shadowMapWidth = 1024;
+	light1.shadowMapHeight = 1024;
+	light1.shadowCameraNear = 10;
+	light1.shadowCameraFar = 4000;
+	light1.shadowCameraFov = light1.angle / Math.PI * 180;
+	light2 = new THREE.DirectionalLight(0xffffff);
+	light2.position.set(200, 100, 0);
+	light2.castShadow = true;
+	light2.shadowCameraLeft = -80;
+	light2.shadowCameraTop = -80;
+	light2.shadowCameraRight = 80;
+	light2.shadowCameraBottom = 80;
+	light2.shadowCameraNear = 1;
+	light2.shadowCameraFar = 1000;
+	light2.shadowBias = -.0001
+	light2.shadowMapWidth = light2.shadowMapHeight = 1024;
+	light2.shadowDarkness = .7;
+	scene.add(light2);
 
 	/////////////////////////////////////////////
 	gcontrols = new function() {
@@ -69,26 +99,37 @@ function init() {
 		jsonModel = new THREE.Mesh(geometry, teapotMaterial);
 		jsonModel.scale.set(10, 10, 10);
 		scene.add(jsonModel);
-		//    jsonModel.position.set(70, 0, 0);
 
 		jsonModel2 = jsonModel.clone();
 		jsonModel2.position.set(70, 0, 0);
-		jsonModel.material = new THREE.MeshLambertMaterial();
+		//jsonModel.material = new THREE.MeshLambertMaterial();
+		jsonModel.material = new THREE.MeshPhongMaterial();
 		scene.add(jsonModel2);
 
 	});
+	
+	renderer.shadowMapEnabled = true;
+	renderer.shadowMapType = THREE.PCFShadowMap;
+	floorMesh.receiveShadow = true;
 }
 
 function animate() {
 	angle += 0.01;
 
-	console.log(teapotMaterial.uniforms.shading.value);
 	if (jsonModel2 !== undefined) {
-		jsonModel2.position.set (70*Math.cos(angle), 0, 70*Math.sin(angle));
+		light1.target = jsonModel;
+		
+		jsonModel.castShadow = true;
+		jsonModel.receiveShadow = true; // self shadow
+		jsonModel2.castShadow = true;
+		jsonModel2.receiveShadow = true; // self shadow
+		
+		jsonModel2.position.set (70 * Math.cos(angle), 0, 70 * Math.sin(angle));
+		light2.position.set(200 * Math.cos(angle), 100, 1 * Math.sin(angle));
+		light1.position.set(1 * Math.cos(angle), 150, 1 * Math.sin(angle));
 		// update the uniform variable
-		if (gcontrols.shading === 'per-vertex'){
+		if (gcontrols.shading === 'per-vertex')
 			teapotMaterial.uniforms.shading.value = 0;
-		}
 		else
 			teapotMaterial.uniforms.shading.value = 1;
 		
