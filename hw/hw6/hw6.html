@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<style>
+	#info {
+	  top:5%;
+	  position: absolute;
+	  color: yellow;
+	  text-align: center;
+	  width: 100%;
+	}
+	body {
+	  overflow: hidden
+	}
+</style>
+</head>
+
+<body> 
+	<div id="info"></div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r70/three.min.js"></script>
+	<script src="https://dl.dropboxusercontent.com/u/3587259/Code/Threejs/OrbitControls.js">
+	</script>
+	<script id="myVertexShader" type="x-shader/x-vertex">
+		uniform vec3 lightpos;  // world coordinate
+		varying vec3 eyelightdir;
+		varying vec3 eyenormal;
+		varying vec4 eyepos;
+		void main() {
+			gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+			eyepos = modelViewMatrix * vec4 (position, 1.0);
+			vec4 eyelightpos = viewMatrix * vec4 (lightpos, 1.0);
+			
+			eyelightdir = normalize (eyelightpos.xyz - eyepos.xyz);
+			eyenormal = normalMatrix * normal;
+		}
+	</script>
+	<script id="myFragmentShader" type="x-shader/x-fragment">
+		varying vec3 eyelightdir;
+		varying vec3 eyenormal;
+		
+		varying vec4 eyepos;
+		
+		uniform float opacity;
+		
+		void main() {
+			float alpha = 0.2;
+			float beta = 0.3;	
+			
+			vec3 kdiffuse = vec3 (1, 1, 1);
+			vec3 kcool = 0.6 * vec3 (1, 1, 0);
+			vec3 kwarm = 0.6 * vec3 (0, 0, 1);
+			
+			vec3 kcdiff = kcool + (alpha * kdiffuse);
+			vec3 kwdiff = kwarm + (beta * kdiffuse);
+			
+			float ndotl = dot (normalize (eyenormal), normalize (eyelightdir)); 
+			
+			float lambda = (1.0 + ndotl) / 2.0;
+			vec3 kfinal = lambda * kcdiff + (1.0 - lambda) * kwdiff;
+			
+			vec3 h = normalize(-normalize(eyepos.xyz) + normalize (eyelightdir));
+			float shininess = 40.;
+			vec3 specular = pow (abs(dot(eyenormal, h)), shininess) * vec3 (1, 1, 1);
+			
+			gl_FragColor = vec4(kfinal + specular, opacity);
+		}
+	</script>
+	<script src="hw6.js"></script> 
+</body>
+
+</html>
