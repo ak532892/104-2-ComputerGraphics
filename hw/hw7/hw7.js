@@ -60,22 +60,20 @@ function init()
 	gui.add(gcontrols, 'fade', 0.1, 5.0);
 	
 	sceneColor = new THREE.Scene();
-	/*
-	var geometry = new THREE.ConeGeometry( 5, 20, 32 );
-	var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-	var cone = new THREE.Mesh( geometry, material );
-	scene.add( cone );
-	*/
-	var column = new THREE.Mesh(new THREE.ConeGeometry (5, 20, 32),
-	new THREE.MeshLambertMaterial({color:0xff1234}));
-	/*var column = new THREE.Mesh(new THREE.BoxGeometry (20, 50, 20),
-	new THREE.MeshLambertMaterial({color:0xff1234}));*/
-	//sceneColor.add (pointLight);  
+	THREE.ImageUtils.crossOrigin = '';
+	var loader = new THREE.ObjectLoader();
+	loader.load (
+		'http://ak532892.github.io/ComputerGraphics2016/hw/hw7/models/dragon.jason', 
+		function ( obj ) {
+			obj.scale.set (3, 3, 3);
+			sceneColor.add( obj );
+		}
+	);
+	
 	// same light cannot be added to two scenes
 	var pointLight2 = new THREE.PointLight(0xffffff, 1.0);
 	pointLight2.position.set(0, 300, 500);
 	sceneColor.add(pointLight2);
-	sceneColor.add(column);
 
 	scene = new THREE.Scene();
 	camera2 = new THREE.OrthographicCamera(-10, 10, 10, -10, -10, 100);
