@@ -3,26 +3,17 @@ var pointLight;
 var scene, sceneMono, sceneColor;
 var camera2;
 var rtTexture;
-var torus;
+var torus, skybox, torus2;
 var gcontrols;
-
-// blocker pass
-// 1st pass: torus (colorWrite off)
-// 2nd pass: column
-
-
-// 
-// render sceneMono to rtTexture (camera)
-// render scene (rtTexture, with monochrome shader) to screen (camera2)
-// render sceneMono (colorWrite off) (camera)
-// render sceneColor (camera)
+var teapots = [];
 
 init();
 animate();
-
+var Teapot = function(mesh){
+	this.mesh = mesh;
+};
 function init()
 {
-	
 	rtTexture = new THREE.WebGLRenderTarget( 
 		1024, 1024, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat 
 	});
@@ -42,18 +33,10 @@ function init()
 	///////////////////////////////////////////////////////////////////////		
 	sceneMono = new THREE.Scene();	
 	pointLight = new THREE.PointLight(0xffffff, 1.0);
-	pointLight.position.set(0, 300, 500);
+	pointLight.position.set(0, 100, 500);
 	sceneMono.add (pointLight);
-
-	torus = new THREE.Mesh(new THREE.TorusGeometry(10, 3, 16, 100),
-	new THREE.MeshLambertMaterial({color:0x12ffee, 
-		colorWrite:false
-	}));
-	torus.scale.set(3, 3, 3);
-	torus.rotation.x = Math.PI/2;
-	sceneMono.add(torus);
 	
-	gcontrols = {fade: 1.0};
+	gcontrols = {fade: 0.1};
 	
 	var gui = new dat.GUI();
 	gui.domElement.id = 'gui';
@@ -61,18 +44,64 @@ function init()
 	
 	sceneColor = new THREE.Scene();
 	THREE.ImageUtils.crossOrigin = '';
+
+	var material = new THREE.MeshLambertMaterial({
+		side: THREE.BackSide,
+		colorWrite:false
+	});
+	skybox = new THREE.Mesh( new THREE.BoxGeometry( 500, 500, 500 ), material );
+	sceneMono.add (skybox);
+	
+	var bumpMap = THREE.TextureLoader('https://ak532892.github.io/ComputerGraphics2016/hw/hw7/models/dragon_C.jpg');
 	var loader = new THREE.ObjectLoader();
+	loader.crossOrigin = '';
+	loader.setCrossOrigin('');
 	loader.load (
-		'http://ak532892.github.io/ComputerGraphics2016/hw/hw7/models/dragon.jason', 
+		'https://ak532892.github.io/ComputerGraphics2016/hw/hw7/models/dragon.json', 
 		function ( obj ) {
-			obj.scale.set (3, 3, 3);
+			obj.scale.set (12, 12, 12);
+			obj.rotation.y = Math.PI;
+			obj.traverse (
+				function (mesh) {
+					if (mesh instanceof THREE.Mesh) {
+						mesh.material.bumpMap = bumpMap;
+						mesh.material.bumpScale = 0.2;
+					}
+				}
+			);
 			sceneColor.add( obj );
 		}
 	);
+	//////////
+	var jsonLoader = new THREE.JSONLoader();
+	teapotMaterial = new THREE.MeshLambertMaterial({color:		0x0000ff, 
+		colorWrite:false
+	})
+	var url = "https://ak532892.github.io/ComputerGraphics2016/hw/hw5/models/teapot.json";
+	jsonLoader.load(url, function(geometry, materials) {
+		teapotObj = new THREE.Mesh(geometry, teapotMaterial);
+		teapotObj.scale.set(40, 40, 40);
+		teapots.push(new Teapot(teapotObj));
+		teapotObj.position.y = 100;
+		teapotObj.rotation.y = -Math.PI/2;
+		sceneMono.add(teapotObj);
+	});
+	//////////////
+	torus = new THREE.Mesh(new THREE.TorusGeometry(10, 3, 16, 100),
+	new THREE.MeshLambertMaterial({color:0xcccc00, 
+		colorWrite:false
+	}));
+	torus.scale.set(22, 18, 6);
+	torus.rotation.x = Math.PI/2;
+	torus2 = torus.clone();
+	torus2.rotation.y = -Math.PI/4;
+	torus.rotation.y = Math.PI/4;
+	sceneMono.add(torus);
+	sceneMono.add(torus2);
 	
 	// same light cannot be added to two scenes
 	var pointLight2 = new THREE.PointLight(0xffffff, 1.0);
-	pointLight2.position.set(0, 300, 500);
+	pointLight2.position.set(0, 100, 500);
 	sceneColor.add(pointLight2);
 
 	scene = new THREE.Scene();
@@ -81,7 +110,7 @@ function init()
 	monochromeMat = new THREE.ShaderMaterial ({
 		uniforms: {
 			texture: {type: 't', value: rtTexture},
-			fade:{type:'f', value: 1.0}
+			fade:{type:'f', value: 0.1}
 		},
 		vertexShader: document.getElementById('monoVS').textContent,
 		fragmentShader: document.getElementById('monoFS').textContent,
@@ -107,15 +136,23 @@ function animate()
 	requestAnimationFrame ( animate );
 	renderer.clear();
 	
-	renderer.setClearColor (0x888800);
+	renderer.setClearColor (0xff4422);
 	torus.material.colorWrite = true;
-
+	torus2.material.colorWrite = true;
+	skybox.material.colorWrite = true;
+	for(i in teapots)
+		teapots[i].mesh.material.colorWrite = true;
 	//color buffer
 	renderer.render (sceneMono, camera, rtTexture, true);
-	renderer.setClearColor (0x888888);
+	renderer.setClearColor (0x444444);
 	renderer.render (scene, camera2);
 	
 	torus.material.colorWrite = false;
+	torus2.material.colorWrite = false;
+	skybox.material.colorWrite = false;
+	for(i in teapots)
+		teapots[i].mesh.material.colorWrite = false;
+	
 	//depth buffer
 	renderer.render (sceneMono, camera);
 	renderer.render (sceneColor, camera);
