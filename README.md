@@ -14,4 +14,4 @@
 * HW 6 - Gooch Shader, Raycaster, JavaScript Class
 * HW 7 - RenderTarget, Multi-pass Rendering, Monochrome Filter, ...
 * HW 8 - Final "project"
-[Demo on Github](http://ak532892.github.io/hw-computer-graphics/index.html)
+<br>[Demo on Github](http://ak532892.github.io/hw-computer-graphics/index.html)
