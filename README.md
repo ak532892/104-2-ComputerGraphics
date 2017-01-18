@@ -5,7 +5,7 @@
 * WebGL, Three.JS
 
 ## Homework ##
-<br>[Demo on Github](http://ak532892.github.io/hw-computer-graphics/index.html)
+[Demo on Github](http://ak532892.github.io/hw-computer-graphics/index.html)
 
 * HW 1 - Time-based Animation
 * HW 2 - Polygonal Model Construction: Kinematics and Texturing
