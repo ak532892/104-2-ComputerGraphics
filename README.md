@@ -1,4 +1,8 @@
-<h1>104-2-ComputerGraphics</h1>
-<h2>Homework</h2>
 
-<a href="http://ak532892.github.io/104-2-ComputerGraphics/index.html">Homepage</a>
+# hw-computer-graphics
+
+* Course - [Advanced Computer Graphics 104-2](http://selquery.ttu.edu.tw/Main/syllabusview.php?SbjNo=I5370)
+* AAA
+
+## Homework ##
+[Demo on Github](http://ak532892.github.io/hw-computer-graphics/index.html)
