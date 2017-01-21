@@ -53,7 +53,7 @@ function init() {
 	var vertShader = document.getElementById('myVertexShader').innerHTML;
 	var fragShader = document.getElementById('myFragmentShader').innerHTML;
 	THREE.ImageUtils.crossOrigin = '';
-	tex1 = THREE.ImageUtils.loadTexture('../hw/hw4/images/410105130.jpg');
+	tex1 = THREE.ImageUtils.loadTexture('../hw4/images/410105130.jpg');
 
 	var uniforms = {
 		imageSize: {
