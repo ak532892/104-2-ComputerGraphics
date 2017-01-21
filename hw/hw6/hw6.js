@@ -163,7 +163,7 @@ function onDocumentMouseDown(event) {
 				});
 				
 				var jsonLoader = new THREE.JSONLoader();
-				var url = "../hw/hw5/models/teapot.json";
+				var url = "../hw5/models/teapot.json";
 				jsonLoader.load(url, function(geometry, materials) {
 					teapotObj = new THREE.Mesh(geometry, teapotMaterial);
 					teapotObj.scale.set(5, 5, 5);
