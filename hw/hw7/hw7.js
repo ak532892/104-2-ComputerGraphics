@@ -52,12 +52,12 @@ function init()
 	skybox = new THREE.Mesh( new THREE.BoxGeometry( 500, 500, 500 ), material );
 	sceneMono.add (skybox);
 	
-	var bumpMap = THREE.TextureLoader('https://ak532892.github.io/ComputerGraphics2016/hw/hw7/models/dragon_C.jpg');
+	var bumpMap = THREE.TextureLoader('models/dragon_C.jpg');
 	var loader = new THREE.ObjectLoader();
 	loader.crossOrigin = '';
 	loader.setCrossOrigin('');
 	loader.load (
-		'https://ak532892.github.io/ComputerGraphics2016/hw/hw7/models/dragon.json', 
+		'models/dragon.json', 
 		function ( obj ) {
 			obj.scale.set (12, 12, 12);
 			obj.rotation.y = Math.PI;
@@ -77,7 +77,7 @@ function init()
 	teapotMaterial = new THREE.MeshLambertMaterial({color:		0x0000ff, 
 		colorWrite:false
 	})
-	var url = "https://ak532892.github.io/ComputerGraphics2016/hw/hw5/models/teapot.json";
+	var url = "../hw/hw5/models/teapot.json";
 	jsonLoader.load(url, function(geometry, materials) {
 		teapotObj = new THREE.Mesh(geometry, teapotMaterial);
 		teapotObj.scale.set(40, 40, 40);
