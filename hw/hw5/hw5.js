@@ -63,7 +63,7 @@ function init() {
 	});
 
 	var jsonLoader = new THREE.JSONLoader();
-	var url = "https://ak532892.github.io/ComputerGraphics2016/hw/hw5/models/teapot.json";
+	var url = "models/teapot.json";
 	jsonLoader.load(url, function(geometry, materials) {
 		//var material = new THREE.MeshFaceMaterial(materials);
 		jsonModel = new THREE.Mesh(geometry, teapotMaterial);
