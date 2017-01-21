@@ -77,7 +77,7 @@ function init()
 	teapotMaterial = new THREE.MeshLambertMaterial({color:		0x0000ff, 
 		colorWrite:false
 	})
-	var url = "../hw/hw5/models/teapot.json";
+	var url = "../hw5/models/teapot.json";
 	jsonLoader.load(url, function(geometry, materials) {
 		teapotObj = new THREE.Mesh(geometry, teapotMaterial);
 		teapotObj.scale.set(40, 40, 40);
