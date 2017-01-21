@@ -191,7 +191,7 @@ function makeBox(x, y, z, Color) {
 function animate() {
 	controls.update();
 	angle += 0.01;
-	pointLight.position.set(80 * Math.cos(angle), 80, 80 * Math.sin(angle));
+	pointLight.position.set(60 * Math.cos(angle), 80, 60 * Math.sin(angle));
 	lightSphere.position.copy(pointLight.position);
 		
 	for(i in teapots)
